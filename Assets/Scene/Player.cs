@@ -17,6 +17,10 @@ public class Player : MonoBehaviour
     // stats
     public int   wood = 0;
     public int   stone = 0;
+
+    //interal script objects
+    private Collider lastSeenObject; //used to clear the outline of the last seen object by the player
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,10 +57,20 @@ public class Player : MonoBehaviour
         }
     } // end Update()
 
+    //Player interaction method. Uses raycast to detect collision with objects and allows player to interact with it.
     void castRay(){
         RaycastHit hitInfo = new RaycastHit();
+        // if the player is currently looking at and within range to interact with an object 
         if(Physics.Raycast(this.transform.position, this.transform.forward, out hitInfo, rayRange)){
             //print("hit:" + hitInfo.collider);
+            
+            lastSeenObject = hitInfo.collider; //save collider to remove highlight when no longer being looked at
+
+            //grab the outline component to highlight the object they are looking at
+            var outline = hitInfo.collider.GetComponent<Outline>();
+            if(outline != null){        //if there's no outline component on it, nothing happens.
+                outline.enabled = true; //indicates visually to the player they can interact with this object!
+            }
             // if the player wishes to interact with an object in front of them
             if(Input.GetKeyDown(KeyCode.E)){
                 // check which object and increase the proper resource value
@@ -69,6 +83,15 @@ public class Player : MonoBehaviour
                     Destroy(hitInfo.collider.gameObject);
                 }  
             }
+        }
+        //check if the last seen object should no longer be highlighted
+        else if(lastSeenObject != null) {
+            print("lastSeenObject: " + lastSeenObject);
+            var outline = lastSeenObject.GetComponent<Outline>();
+            if(outline != null){
+                outline.enabled = false; //remove the highlight on the previous object
+            }
+            lastSeenObject = null; //small optimization
         }
     }
 }
