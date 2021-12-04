@@ -6,7 +6,7 @@ public class ModifyAllChildren : MonoBehaviour
 {
     //recusively checks for all children within the targeted hierarchy given GameObject Parent
     public GameObject Parent;
-    //TODO: add public Function callFunction; that is used to call whatever function is targeted in the script
+    //TODO: add public Event callFunction; that is used to call whatever function is targeted in the script
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +31,7 @@ public class ModifyAllChildren : MonoBehaviour
         //if the currentObject is NOT an empty object (i.e. has more components than just a transform)
         if (currentObj.GetComponents<Component>().Length > 1)
         {
-            //TODO: figure out how to generalize this to a public variable "callFunction" that gets called.
+            //TODO: figure out how to generalize this to a public delegate "callFunction" that gets called.
             AddOutlineToObject(currentObj);
         }
     }
