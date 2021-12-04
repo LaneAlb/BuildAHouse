@@ -96,11 +96,13 @@ public class Player : MonoBehaviour
                 {
                     this.stone++;
                     Destroy(hitInfo.collider.gameObject);
+                    StonePlayer.stoneValue += 10;
                 }
                 if (hitInfo.collider.tag == "TREE")
                 {
                     this.wood++;
                     Destroy(hitInfo.collider.gameObject);
+                    WoodPlayer.woodValue += 10;
                 }
                 if (hitInfo.collider.tag == "DEPOSIT") //deposit resources in the cart
                 {
@@ -108,7 +110,11 @@ public class Player : MonoBehaviour
                     this.wood = 0;
                     this.depositStone += this.stone;
                     this.stone = 0;
-                    //TODO: update UI text right here
+                    WoodDeposit.woodValue += WoodPlayer.woodValue;
+                    StoneDeposit.stoneValue += StonePlayer.stoneValue;
+                    WoodPlayer.woodValue = 0;
+                    StonePlayer.stoneValue = 0;
+                    
                 }
             }
         }
