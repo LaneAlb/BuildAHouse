@@ -55,18 +55,18 @@ public class Player : MonoBehaviour
         }
         this.GetComponent<Transform>().eulerAngles = rotation;
 
-        print("wood:" + this.wood);
-        print("stone:" + this.stone);
-        print("depositWood:" + this.depositWood);
-        print("depositStone:" + this.depositStone);
+        //print("wood:" + this.wood);
+        //print("stone:" + this.stone);
+        //print("depositWood:" + this.depositWood);
+        //print("depositStone:" + this.depositStone);
 
         castRay();
         // Let anyone end the game with the 'esc' Key in editor or in the build
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-#if UNITY_EDITOR
+            #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-#endif
+            #endif
             Application.Quit();
         }
     } // end Update()
@@ -114,7 +114,6 @@ public class Player : MonoBehaviour
                     StoneDeposit.stoneValue += StonePlayer.stoneValue;
                     WoodPlayer.woodValue = 0;
                     StonePlayer.stoneValue = 0;
-                    
                 }
             }
         }
